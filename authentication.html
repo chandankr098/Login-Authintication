@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Authentication</title>
+    <style>
+        body{
+            margin: 5;
+            padding: 5;
+            justify-content: center;
+            align-items: center;
+            background:gray;
+        }
+        h2{
+            text-align: center;
+            color:aqua;
+        }
+        div{
+            font-size: 20px;
+            font-style: normal;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Simple Authentication System</h2>
+
+    <div id="registerSection">
+        <h3>Register</h3>
+        <label for="registerUsername">Username:</label>
+        <input type="text" id="registerUsername">
+        <br>
+        <label for="registerPassword">Password:</label>
+        <input type="password" id="registerPassword">
+        <br>
+        <button onclick="register()">Register</button>
+    </div>
+
+    <div id="loginSection">
+        <h3>Login</h3>
+        <label for="loginUsername">Username:</label>
+        <input type="text" id="loginUsername">
+        <br>
+        <label for="loginPassword">Password:</label>
+        <input type="password" id="loginPassword">
+        <br>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="securedPage" style="display: none;">
+        <h3>Welcome to the Secured Page!</h3>
+        <p>You are now logged in.</p>
+    </div>
+
+    <script>
+        function register() {
+            const username = document.getElementById("registerUsername").value;
+            const password = document.getElementById("registerPassword").value;
+
+            if (!username || !password) {
+                alert("Please enter a username and password.");
+                return;
+            }
+
+            if (localStorage.getItem(username)) {
+                alert("Username already exists. Try a different one.");
+                return;
+            }
+
+            localStorage.setItem(username, password);
+            alert("Registration successful!");
+        }
+
+        function login() {
+            const username = document.getElementById("loginUsername").value;
+            const password = document.getElementById("loginPassword").value;
+
+            const storedPassword = localStorage.getItem(username);
+
+            if (storedPassword && storedPassword === password) {
+                alert("Login successful!");
+                showSecuredPage();
+            } else {
+                alert("Invalid username or password.");
+            }
+        }
+
+        function showSecuredPage() {
+            document.getElementById("registerSection").style.display = "none";
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("securedPage").style.display = "block";
+        }
+    </script>
+</body>
+</html>
